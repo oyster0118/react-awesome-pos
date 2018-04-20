@@ -1,8 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { HashRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './App';
+
+import './index.css';
+import 'element-theme-default';
+import registerServiceWorker from './registerServiceWorker';
+// import configureStore from './store/configureStore';
+
+// const store = configureStore();
+// <Provider store={store}>
+
+ReactDOM.render(
+    <Provider>
+        <HashRouter basename="/">
+            <App />
+        </HashRouter>
+    </Provider>
+    , document.getElementById('root')
+);
 registerServiceWorker();

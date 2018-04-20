@@ -1,0 +1,29 @@
+.pos {
+  height: 100%; }
+  .pos .pos-content {
+    height: 100%;
+    overflow: hidden; }
+    .pos .pos-content .order-list {
+      height: 100%;
+      background-color: #F9FAFC;
+      border-right: 1px solid #C0CCDA; }
+      .pos .pos-content .order-list .totalDiv {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #58B7FF; }
+      .pos .pos-content .order-list .div-btn {
+        margin-top: 10px; }
+    .pos .pos-content .often-goods .title {
+      height: 20px;
+      border-bottom: 1px solid #D3DCE6;
+      background-color: #F9FAFC;
+      padding: 10px; }
+    .pos .pos-content .often-goods .o-price {
+      color: #58B7FF; }
+    .pos .pos-content .often-goods .often-goods-list ul li {
+      list-style: none;
+      float: left;
+      border: 1px solid #E5E9F2;
+      padding: 10px;
+      margin: 5px;
+      background-color: #fff; }
