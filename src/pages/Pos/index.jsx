@@ -3,6 +3,21 @@ import {Layout, Table, Button, Message} from 'element-react'
 import {getData} from '../../fetch/fetchData'
 import './style.css'
 
+const GoodsList = (props) => {
+    return (
+      <ul>
+      {props.list.map((goods) => {
+        return (
+          <li key={goods.goodsId} onClick={() => {props.addOrderList(goods)}}>
+            <span>{goods.goodsName}</span>
+            <span className="o-price">￥{goods.price}元</span>
+          </li>
+        )
+      })}
+      </ul>
+    )
+}
+
 class Pos extends PureComponent {
   constructor(props) {
     super(props);
@@ -39,8 +54,8 @@ class Pos extends PureComponent {
           resizable:false,          
           width: 100,
           render: (row,column,index)=>{
-            return <span><Button type="text" size="small" onClick={() => {this.delSingleGoods(row,column,index)}}>删除</Button>
-            <Button type="text" size="small" onClick={() => {this.addOrderList(row,column,index)}}>增加</Button></span>
+            return <span><Button type="text" size="small" onClick={this.delSingleGoods.bind(this, row,column,index)}>删除</Button>
+            <Button type="text" size="small" onClick={this.addOrderList.bind(this, row,column,index)}>增加</Button></span>
           }
         }
       ],
@@ -59,13 +74,11 @@ class Pos extends PureComponent {
     console.log(row)
     console.log(column)
     console.log(index)
+    //注意引用类型 保证this.state是immutable
     let newData = []
     if (row.count === 1) {
       newData = this.state.tableData.filter((o,i) => { return i !== index})
     } else {
-      // newData = this.state.tableData;      
-      // let arrIndex = this.state.tableData.findIndex(o => o.goodsId === row.goodsId)
-      // newData[arrIndex].count--; 
       newData = this.state.tableData.map((o,i) => {
         if (i === index) {
           o.count--
@@ -78,7 +91,7 @@ class Pos extends PureComponent {
   //添加订单列表的方法
   addOrderList(goods) {
     console.log(goods)
-    let tempTableData = this.state.tableData;
+    let tempTableData = Object.assign(this.state.tableData,{});
     let isHave = false;
     //判断是否这个商品已经存在于订单列表
     for (let i = 0; i < this.state.tableData.length; i++) {
@@ -160,16 +173,7 @@ class Pos extends PureComponent {
             <div className="often-goods">
               <div className="title">常用商品</div>
               <div className="often-goods-list">
-                <ul>
-                    {this.state.OftenGoodsList.map((goods) => {
-                      return (
-                        <li key={goods.goodsId} onClick={() => {this.addOrderList(goods)}}>
-                          <span>{goods.goodsName}</span>
-                          <span className="o-price">￥{goods.price}元</span>
-                        </li>
-                      )
-                    })}
-                </ul>
+                <GoodsList list = {this.state.OftenGoodsList} addOrderList = {this.addOrderList}></GoodsList>
               </div>
             </div>
           </Layout.Col>
